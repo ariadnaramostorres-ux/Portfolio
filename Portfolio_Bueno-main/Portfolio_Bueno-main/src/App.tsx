@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   motion,
   useScroll,
@@ -928,18 +929,32 @@ export default function App() {
 
                 <form className="space-y-8" onSubmit={async (e) => {
                   e.preventDefault();
-                  const formData = new FormData(e.currentTarget);
-                  const name = formData.get('name') as string;
-                  const email = formData.get('email') as string;
-                  const message = formData.get('message') as string;
+                  const form = e.currentTarget;
+                  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                  const originalText = submitBtn.textContent;
+                  submitBtn.disabled = true;
+                  submitBtn.textContent = activeLang === 'es' ? 'Enviando...' : 'Sending...';
 
-                  const subject = encodeURIComponent(`Portfolio Contact: ${name}`);
-                  const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\n\nMensaje:\n${message}`);
-                  window.open(`mailto:ariadnart2005@gmail.com?subject=${subject}&body=${body}`, '_blank');
-                  alert(activeLang === 'es'
-                    ? '¡Se abrirá tu cliente de correo para enviar el mensaje! Si no se abre, envía un email a ariadnart2005@gmail.com'
-                    : 'Your email client will open to send the message! If it doesn\'t open, send an email to ariadnart2005@gmail.com');
-                  (e.target as HTMLFormElement).reset();
+                  try {
+                    await emailjs.sendForm(
+                      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                      form,
+                      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+                    );
+                    alert(activeLang === 'es'
+                      ? '¡Mensaje enviado correctamente! Te responderé lo antes posible.'
+                      : 'Message sent successfully! I will reply as soon as possible.');
+                    form.reset();
+                  } catch (error) {
+                    console.error('EmailJS error:', error);
+                    alert(activeLang === 'es'
+                      ? 'Error al enviar el mensaje. Por favor, envía un email directamente a ariadnart2005@gmail.com'
+                      : 'Error sending message. Please email directly to ariadnart2005@gmail.com');
+                  } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                  }
                 }}>
                   <div className="space-y-4">
                     <label className="text-xs uppercase tracking-[0.3em] text-white/30 font-bold">{t.form_name}</label>

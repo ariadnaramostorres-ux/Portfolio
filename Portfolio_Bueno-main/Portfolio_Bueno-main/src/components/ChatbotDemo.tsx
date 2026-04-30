@@ -52,6 +52,16 @@ export default function ChatbotDemo({ isOpen, onClose, title, context }: Chatbot
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const prevTitleRef = useRef<string>('');
+
+  useEffect(() => {
+    if (title !== prevTitleRef.current) {
+      setMessages([]);
+      setInput('');
+      setIsTyping(false);
+      prevTitleRef.current = title;
+    }
+  }, [title]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
