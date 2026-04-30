@@ -958,11 +958,11 @@ export default function App() {
                 }}>
                   <div className="space-y-4">
                     <label className="text-xs uppercase tracking-[0.3em] text-white/30 font-bold">{t.form_name}</label>
-                    <input name="name" type="text" required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-xl focus:border-primary outline-none transition-all placeholder:text-white/10" placeholder="John Doe" />
+                    <input name="from_name" type="text" required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-xl focus:border-primary outline-none transition-all placeholder:text-white/10" placeholder="John Doe" />
                   </div>
                   <div className="space-y-4">
                     <label className="text-xs uppercase tracking-[0.3em] text-white/30 font-bold">Email</label>
-                    <input name="email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-xl focus:border-primary outline-none transition-all placeholder:text-white/10" placeholder="john@company.com" />
+                    <input name="from_email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-xl focus:border-primary outline-none transition-all placeholder:text-white/10" placeholder="john@company.com" />
                   </div>
                   <div className="space-y-4">
                     <label className="text-xs uppercase tracking-[0.3em] text-white/30 font-bold">{t.form_message}</label>
