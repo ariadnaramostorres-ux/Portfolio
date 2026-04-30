@@ -89,7 +89,7 @@ export default function ChatbotDemo({ isOpen, onClose, title, context }: Chatbot
     setMessages((prev) => [...prev, { text: userMsg, type: 'user' }]);
     setIsTyping(true);
 
-    const botResponse = await chatWithAI(userMsg, context);
+    const botResponse = await chatWithAI(userMsg, title);
     
     setMessages((prev) => [...prev, { text: botResponse, type: 'bot' }]);
     setIsTyping(false);
